@@ -22,4 +22,4 @@ terraform apply -auto-approve
 cd ../ansible
 ansible-playbook -i inventory setup-docker.yml
 
-`screenshots/grafana-dashboard.png`
+![Grafana Dashboard](screenshots/grafana-dashboard.png)
