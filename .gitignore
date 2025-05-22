@@ -1,5 +1,11 @@
-# Ignorer les fichiers Terraform
+# Terraform
 .terraform/
-terraform.tfstate
-terraform.tfstate.backup
+*.tfstate
+*.tfstate.backup
 *.tfvars
+crash.log
+
+# Private keys
+*.pem
+*.key
+*.pub
