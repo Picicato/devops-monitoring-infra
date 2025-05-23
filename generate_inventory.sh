@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IP=$(awk '/public_ip/ {gsub(/["=]/, "", $NF); print $NF}' apply_output.txt)
+IP=$(tail -n 1 terraform-aws/apply_output.txt | cut -d '"' -f2)
 
 # Vérification
 if [[ -z "$IP" ]]; then
