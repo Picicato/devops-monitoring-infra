@@ -54,7 +54,6 @@ jobs:
           chmod +x ./generate_inventory.sh
           ./generate_inventory.sh
 
-      - name: Run Ansible Playbook
-        working-directory: ./ansible
+      - name: Run Ansible playbook
         run: |
-          ansible-playbook -i ../terraform-aws/inventory setup-docker.yml --ssh-extra-args="-o StrictHostKeyChecking=no"
+          ansible-playbook -i ansible/inventory setup-docker.yml --ssh-extra-args="-o StrictHostKeyChecking=no"
