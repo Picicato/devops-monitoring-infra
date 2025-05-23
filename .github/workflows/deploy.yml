@@ -55,6 +55,6 @@ jobs:
           ./generate_inventory.sh
 
       - name: Run Ansible playbook
-        working-directory: .
+        working-directory: ./ansible
         run: |
-          ansible-playbook -i ansible/inventory setup-docker.yml --ssh-extra-args="-o StrictHostKeyChecking=no"
+          ansible-playbook -i inventory setup-docker.yml --ssh-extra-args="-o StrictHostKeyChecking=no"
