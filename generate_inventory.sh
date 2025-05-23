@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IP=$(terraform output -raw public_ip)
+IP=$(/usr/bin/env terraform output -raw public_ip)
 
 echo "Inventory file generated with IP: $IP"
 
