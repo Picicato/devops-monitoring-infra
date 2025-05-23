@@ -10,7 +10,7 @@ if [[ -z "$IP" ]]; then
 fi
 
 # Créer le fichier d'inventaire Ansible
-cat > terraform-aws/ansible/inventory <<EOF
+cat > ansible/inventory <<EOF
 [devops-instance]
 $IP ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
 EOF
