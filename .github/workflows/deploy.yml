@@ -34,7 +34,7 @@ jobs:
         working-directory: ./terraform-aws
         run: |
           terraform init
-          terraform apply -auto-approve
+          terraform apply -auto-approve | tee apply_output.txt
 
       - name: Setup SSH key
         run: |
