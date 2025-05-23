@@ -15,6 +15,7 @@ variable "key_name" {
   default = "aws-key"
 }
 
-variable "public_key_path" {
-  default = "~/.ssh/aws-key.pub"
+variable "public_key" {
+  description = "The SSH public key content"
+  type        = string
 }

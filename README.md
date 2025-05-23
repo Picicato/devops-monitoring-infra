@@ -22,5 +22,8 @@ terraform apply -auto-approve
 cd ../ansible
 ansible-playbook -i inventory setup-docker.yml
 ```
+## 📊 Dashboard Grafana
+
+Dashboard custom de monitoring CPU, RAM, réseau.
 
 ![Grafana Dashboard](screenshots/grafana-dashboard.png)

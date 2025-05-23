@@ -25,6 +25,11 @@ jobs:
         with:
           terraform_version: 1.5.7
 
+      - name: Create terraform.tfvars with secrets
+        working-directory: ./terraform-aws
+        run: |
+          echo 'public_key = "${{ secrets.SSH_PUBLIC_KEY }}"' > terraform.tfvars
+
       - name: Terraform Init and Apply
         working-directory: ./terraform-aws
         run: |
