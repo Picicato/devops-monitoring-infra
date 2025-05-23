@@ -1,18 +1,22 @@
 #!/bin/bash
 
-# Récupérer l'IP depuis Terraform
-IP=$(terraform output -raw public_ip -chdir=terraform-aws 2>/dev/null)
+IP=$(terraform output -raw public_ip -chdir=terraform-aws)
 
-# Vérifier que l'IP n'est pas vide
-if [[ -z "$IP" ]]; then
-  echo "Error: Terraform output public_ip is empty or command failed"
+echo "DEBUG: IP raw value: '$IP'" >&2
+
+# Nettoyer les caractères de contrôle (ex: séquences ANSI)
+CLEAN_IP=$(echo "$IP" | sed 's/[^[:print:]\t]//g')
+
+echo "DEBUG: IP cleaned value: '$CLEAN_IP'" >&2
+
+if [[ -z "$CLEAN_IP" ]]; then
+  echo "Error: IP is empty after cleaning" >&2
   exit 1
 fi
 
-# Créer le fichier d'inventaire Ansible
-cat > ansible/inventory <<EOF
+cat > terraform-aws/ansible/inventory <<EOF
 [devops-instance]
-$IP ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
+$CLEAN_IP ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
 EOF
 
-echo "Inventory file generated with IP: $IP"
+echo "Inventory file generated with IP: $CLEAN_IP"
