@@ -1,13 +1,16 @@
 #!/bin/bash
-set -euxo pipefail
 
-cd terraform-aws
+# Récupérer l'IP depuis Terraform
+IP=$(terraform output -raw public_ip -chdir=terraform-aws 2>/dev/null)
 
-IP=$(terraform output -raw public_ip)
+# Vérifier que l'IP n'est pas vide
+if [[ -z "$IP" ]]; then
+  echo "Error: Terraform output public_ip is empty or command failed"
+  exit 1
+fi
 
-mkdir -p ../ansible
-
-cat > ../ansible/inventory <<EOF
+# Créer le fichier d'inventaire Ansible
+cat > terraform-aws/ansible/inventory <<EOF
 [devops-instance]
 $IP ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
 EOF
