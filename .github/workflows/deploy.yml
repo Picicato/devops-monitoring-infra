@@ -49,7 +49,6 @@ jobs:
           pip3 install ansible
 
       - name: Generate Ansible inventory
-        working-directory: ./terraform-aws
         run: |
           chmod +x ./generate_inventory.sh
           ./generate_inventory.sh
