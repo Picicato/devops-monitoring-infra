@@ -3,13 +3,13 @@
 if [[ -s apply_output.txt ]]; then
   echo -e "\n📄 Contenu de apply_output.txt :"
   echo "--------------------------------"
-  cat apply_output.txt
+  cat terraform-aws/apply_output.txt
   echo "--------------------------------"
 else
   echo "⚠️ Fichier apply_output.txt vide ou inexistant."
 fi
 
-IP=$(tail -n 1 terraform-aws/apply_output.txt | cut -d '"' -f2)
+IP=$(tail -n 2 terraform-aws/apply_output.txt | cut -d '"' -f2)
 
 # Vérification
 if [[ -z "$IP" ]]; then
