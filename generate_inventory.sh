@@ -5,7 +5,7 @@ echo "--------------------------------"
 cat terraform-aws/apply_output.txt
 echo "--------------------------------"
 
-IP=$(tail -n 2 terraform-aws/apply_output.txt | cut -d '"' -f2)
+IP=$(grep 'public_ip' terraform-aws/apply_output.txt | grep -oE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')
 
 # Vérification
 if [[ -z "$IP" ]]; then
