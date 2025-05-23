@@ -1,7 +1,5 @@
 #!/bin/bash
-set -e
-
-# Le script est lancé depuis la racine du repo
+set -euxo pipefail  # active mode debug + exit on erreur
 
 IP=$(terraform output -raw public_ip -chdir=terraform-aws)
 
