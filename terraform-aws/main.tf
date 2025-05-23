@@ -2,10 +2,10 @@ provider "aws" {
   region = var.region
 }
 
-resource "aws_key_pair" "default" {
-  key_name   = var.key_name
-  public_key = var.public_key
-}
+#resource "aws_key_pair" "default" {
+#  key_name   = var.key_name
+#  public_key = var.public_key
+#}
 
 resource "random_id" "suffix" {
   byte_length = 2
