@@ -1,11 +1,13 @@
 #!/bin/bash
-set -euxo pipefail  # active mode debug + exit on erreur
+set -euxo pipefail
 
-IP=$(terraform output -raw public_ip -chdir=terraform-aws)
+cd terraform-aws
 
-mkdir -p ansible
+IP=$(terraform output -raw public_ip)
 
-cat > ansible/inventory <<EOF
+mkdir -p ../ansible
+
+cat > ../ansible/inventory <<EOF
 [devops-instance]
 $IP ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
 EOF
