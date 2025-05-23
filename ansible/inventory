@@ -1,2 +1,2 @@
 [devops-instance]
-13.38.8.236 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/aws-key
+0.0.0.0 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
