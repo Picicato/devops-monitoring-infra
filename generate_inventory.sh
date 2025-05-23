@@ -1,13 +1,9 @@
 #!/bin/bash
 
-if [[ -s apply_output.txt ]]; then
-  echo -e "\n📄 Contenu de apply_output.txt :"
-  echo "--------------------------------"
-  cat terraform-aws/apply_output.txt
-  echo "--------------------------------"
-else
-  echo "⚠️ Fichier apply_output.txt vide ou inexistant."
-fi
+echo -e "\n📄 Contenu de apply_output.txt :"
+echo "--------------------------------"
+cat terraform-aws/apply_output.txt
+echo "--------------------------------"
 
 IP=$(tail -n 2 terraform-aws/apply_output.txt | cut -d '"' -f2)
 
