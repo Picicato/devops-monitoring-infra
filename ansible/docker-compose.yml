@@ -7,13 +7,12 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
     ports:
       - "9090:9090"
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3000:3000"
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:9090/-/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   node_exporter:
     image: prom/node-exporter:latest
@@ -23,3 +22,54 @@ services:
       - '--path.rootfs=/host'
     volumes:
       - '/:/host:ro,rslave'
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:9100/metrics"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  loki:
+    image: grafana/loki:2.8.2
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki/config.yaml:/etc/loki/local-config.yaml
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:3100/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  promtail:
+    image: grafana/promtail:2.8.2
+    volumes:
+      - /var/log:/var/log
+      - ./promtail/config.yaml:/etc/promtail/config.yaml
+    command: -config.file=/etc/promtail/config.yaml
+    healthcheck:
+      test: ["CMD", "pgrep", "promtail"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    depends_on:
+      prometheus:
+        condition: service_healthy
+      node_exporter:
+        condition: service_healthy
+      loki:
+        condition: service_healthy
+      promtail:
+        condition: service_healthy

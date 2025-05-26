@@ -1,0 +1,13 @@
+apiVersion: 1
+providers:
+  - name: 'Node Exporter Dashboards'
+    folder: 'Node Exporter'
+    type: file
+    options:
+      path: /etc/grafana/provisioning/dashboards/node_exporter
+
+  - name: 'Loki Dashboards'
+    folder: 'Loki'
+    type: file
+    options:
+      path: /etc/grafana/provisioning/dashboards/loki
