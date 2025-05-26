@@ -35,7 +35,7 @@ services:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
     volumes:
-      - ./loki/config.yaml:/etc/loki/local-config.yaml
+      - ./loki/local-config.yaml:/etc/loki/local-config.yaml
     healthcheck:
       test: ["CMD", "wget", "--spider", "http://localhost:3100/ready"]
       interval: 10s
@@ -47,8 +47,8 @@ services:
     image: grafana/promtail:2.8.2
     volumes:
       - /var/log:/var/log
-      - ./promtail/config.yaml:/etc/promtail/config.yaml
-    command: -config.file=/etc/promtail/config.yaml
+      - ./promtail/promtail-config.yaml:/etc/promtail/promtail-config.yaml
+    command: -config.file=/etc/promtail/promtail-config.yaml
     healthcheck:
       test: ["CMD", "pgrep", "promtail"]
       interval: 10s
