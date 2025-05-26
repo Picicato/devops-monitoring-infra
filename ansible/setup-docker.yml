@@ -60,6 +60,38 @@
         group: ubuntu
         mode: '0644'
 
+    - name: Create loki directory if not exists
+      file:
+        path: /home/ubuntu/loki
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: '0755'
+
+    - name: Copy Loki config.yaml to VM
+      copy:
+        src: ./loki/local-config.yaml
+        dest: /home/ubuntu/loki/local-config.yaml
+        owner: ubuntu
+        group: ubuntu
+        mode: '0644'
+
+    - name: Create promtail directory if not exists
+      file:
+        path: /home/ubuntu/promtail
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: '0755'
+
+    - name: Copy Promtail config.yaml to VM
+      copy:
+        src: ./promtail/promtail-config.yaml
+        dest: /home/ubuntu/promtail/promtail-config.yaml
+        owner: ubuntu
+        group: ubuntu
+        mode: '0644'
+
     - name: Launch monitoring stack with docker-compose
       command: docker-compose up -d
       args:
