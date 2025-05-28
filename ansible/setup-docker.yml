@@ -52,6 +52,13 @@
         group: ubuntu
         mode: '0644'
 
+    - name: Copy entire grafana directory to VM
+      ansible.builtin.synchronize:
+        src: grafana/
+        dest: /home/ubuntu/grafana/
+        rsync_opts:
+          - "--chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r"
+
     - name: Copy prometheus.yml to VM
       copy:
         src: prometheus.yml
