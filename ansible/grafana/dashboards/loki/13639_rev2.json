@@ -83,7 +83,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_LOKI}",
+      "datasource": "Loki",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -173,7 +173,7 @@
       }
     },
     {
-      "datasource": "${DS_LOKI}",
+      "datasource": "Loki",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -218,7 +218,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_LOKI}",
+        "datasource": "Loki",
         "definition": "label_values(job)",
         "hide": 0,
         "includeAll": false,

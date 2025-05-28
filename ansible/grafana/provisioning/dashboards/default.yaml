@@ -4,10 +4,10 @@ providers:
     folder: 'Node Exporter'
     type: file
     options:
-      path: /etc/grafana/provisioning/dashboards/node_exporter
+      path: /var/lib/grafana/dashboards/node_exporter
 
   - name: 'Loki Dashboards'
     folder: 'Loki'
     type: file
     options:
-      path: /etc/grafana/provisioning/dashboards/loki
+      path: /var/lib/grafana/dashboards/loki
