@@ -7,12 +7,6 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
     ports:
       - "9090:9090"
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:9090/-/ready"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
 
   node_exporter:
     image: prom/node-exporter:latest
@@ -22,39 +16,27 @@ services:
       - '--path.rootfs=/host'
     volumes:
       - '/:/host:ro,rslave'
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:9100/metrics"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
 
   loki:
-    image: grafana/loki:2.8.2
+    image: grafana/loki:2.9.0
+    container_name: loki
     ports:
       - "3100:3100"
-    command: -config.file=/etc/loki/local-config.yaml
     volumes:
-      - ./loki/local-config.yaml:/etc/loki/local-config.yaml
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:3100/ready"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
+      - ./loki/config.yml:/etc/loki/config.yml
+      - ./loki/wal:/wal
+      - ./loki/index:/loki/index
+      - ./loki/chunks:/loki/chunks
+      - ./loki/cache:/loki/cache
+    command: -config.file=/etc/loki/config.yml
 
   promtail:
-    image: grafana/promtail:2.8.2
+    image: grafana/promtail:2.9.0
     volumes:
-      - /var/log:/var/log
-      - ./promtail/promtail-config.yaml:/etc/promtail/promtail-config.yaml
-    command: -config.file=/etc/promtail/promtail-config.yaml
-    healthcheck:
-      test: ["CMD", "pgrep", "promtail"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
+      - /var/log:/var/log:ro
+      - ./promtail/config.yml:/etc/promtail/config.yml:ro
+    command:
+      - -config.file=/etc/promtail/config.yml
 
   grafana:
     image: grafana/grafana:latest
@@ -63,7 +45,8 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
-      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
     depends_on:
       - prometheus
       - loki
