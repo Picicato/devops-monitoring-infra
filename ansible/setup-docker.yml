@@ -53,22 +53,18 @@
         mode: '0644'
 
     - name: Copy Grafana provisioning files
-      copy:
+      ansible.builtin.synchronize:
         src: grafana/provisioning/
         dest: /home/ubuntu/grafana/provisioning/
-        owner: ubuntu
-        group: ubuntu
-        mode: '0644'
-        recurse: yes
+        rsync_opts:
+          - "--chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r"
 
     - name: Copy Grafana dashboards files
-      copy:
+      ansible.builtin.synchronize:
         src: grafana/dashboards/
         dest: /home/ubuntu/grafana/dashboards/
-        owner: ubuntu
-        group: ubuntu
-        mode: '0644'
-        recurse: yes
+        rsync_opts:
+          - "--chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r"
 
     - name: Copy prometheus.yml to VM
       copy:
