@@ -70,8 +70,8 @@
 
     - name: Copy Loki config.yaml to VM
       copy:
-        src: ./loki/local-config.yaml
-        dest: /home/ubuntu/loki/local-config.yaml
+        src: ./loki/config.yml
+        dest: /home/ubuntu/loki/config.yml
         owner: ubuntu
         group: ubuntu
         mode: '0644'
@@ -86,8 +86,8 @@
 
     - name: Copy Promtail config.yaml to VM
       copy:
-        src: ./promtail/promtail-config.yaml
-        dest: /home/ubuntu/promtail/promtail-config.yaml
+        src: ./promtail/config.yml
+        dest: /home/ubuntu/promtail/config.yml
         owner: ubuntu
         group: ubuntu
         mode: '0644'

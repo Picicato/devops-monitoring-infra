@@ -8,7 +8,3 @@ $IP ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
 EOF
 
 echo "Inventory file generated with IP: $IP"
-
-# Pour le debug : afficher le contenu final
-echo -e "\n📂 Contenu final de ansible/inventory :"
-cat ansible/inventory
