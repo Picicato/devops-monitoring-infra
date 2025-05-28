@@ -59,10 +59,18 @@
         rsync_opts:
           - "--chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r"
 
+    - name: Create prometheus directory if not exists
+      file:
+        path: /home/ubuntu/prometheus
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: '0755'
+
     - name: Copy prometheus.yml to VM
       copy:
-        src: prometheus.yml
-        dest: /home/ubuntu/prometheus.yml
+        src: ./prometheus/prometheus.yml
+        dest: /home/ubuntu/prometheus/prometheus.yml
         owner: ubuntu
         group: ubuntu
         mode: '0644'
