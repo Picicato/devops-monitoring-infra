@@ -52,6 +52,14 @@
         group: ubuntu
         mode: '0644'
 
+    - name: Create Grafana directory if not exists
+      file:
+        path: /home/ubuntu/grafana
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: '0755'
+
     - name: Copy Grafana provisioning files
       ansible.builtin.synchronize:
         src: grafana/provisioning/
