@@ -52,28 +52,6 @@
         group: ubuntu
         mode: '0644'
 
-    - name: Create Grafana directory if not exists
-      file:
-        path: /home/ubuntu/grafana
-        state: directory
-        owner: ubuntu
-        group: ubuntu
-        mode: '0755'
-
-    - name: Copy Grafana provisioning files
-      ansible.builtin.synchronize:
-        src: grafana/provisioning/
-        dest: /home/ubuntu/grafana/provisioning/
-        rsync_opts:
-          - "--chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r"
-
-    - name: Copy Grafana dashboards files
-      ansible.builtin.synchronize:
-        src: grafana/dashboards/
-        dest: /home/ubuntu/grafana/dashboards/
-        rsync_opts:
-          - "--chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r"
-
     - name: Copy prometheus.yml to VM
       copy:
         src: prometheus.yml
@@ -89,19 +67,6 @@
         owner: ubuntu
         group: ubuntu
         mode: '0755'
-
-    - name: Create Loki subdirectories
-      file:
-        path: "/home/ubuntu/loki/{{ item }}"
-        state: directory
-        owner: 10001
-        group: 10001
-        mode: '0755'
-      loop:
-        - cache
-        - chunk
-        - index
-        - wal
 
     - name: Copy Loki config.yaml to VM
       copy:
