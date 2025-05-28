@@ -76,6 +76,10 @@
         group: ubuntu
         mode: '0644'
 
+    - name: Set correct permissions for Loki config
+      become: true
+      ansible.builtin.command: chown -R 10001:10001 /home/ubuntu/loki
+
     - name: Create promtail directory if not exists
       file:
         path: /home/ubuntu/promtail
